@@ -2,7 +2,7 @@
 
 라이브러리 구성:
   ports/  — Port(RecipePort·ConversationPort·VersionPort)·주입 인터페이스(LlmPort)
-  dto/    — 입력/버전 DTO(RecipeParam·ConversationParam·VersionInfo)·응답 DTO(RecipeReply·ConverseReply)
+  dto/    — 입력/버전 DTO(RecipeParam·RegenerateParam·ConversationParam·VersionInfo)·응답 DTO(RecipeReply·ConverseReply)
 
 ⛔ 의존성 0 — 표준 라이브러리 외 import 금지(test_dependency_free.py로 강제).
 공개 표면은 톱레벨 재수출: `from heysenlyt_ai_port import RecipePort, RecipeParam, ...`
@@ -13,6 +13,7 @@ from heysenlyt_ai_port.dto.params import (
     ConversationParam,
     Demographics,
     RecipeParam,
+    RegenerateParam,
     VersionInfo,
 )
 from heysenlyt_ai_port.errors import (
@@ -38,6 +39,7 @@ __all__ = [
     "RecipePort",
     "RecipeReply",
     "RecipeParam",
+    "RegenerateParam",
     "VersionInfo",
     "VersionPort",
 ]
