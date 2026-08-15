@@ -86,6 +86,16 @@ class ConversationParam:
     # 식향 전용(v1.2.0 §E) — 클라가 지난 턴 자기 제출 축을 회송(통합코드는 판정 않고 에코).
     last_known_axes: dict[str, str] | None = None
     params: dict[str, Any] = field(default_factory=dict)
+    # 이 호출은 **발화(텍스트)를 반드시 받아야 한다**고 호출자가 요구하는 축.
+    #   왜 필요한가 — 모델이 도구만 부르고 텍스트를 빠뜨리는 턴이 있다(실측 2026-08-15:
+    #   content 빈 채 tool_calls=['suggestKeywords']). 그때 호출자는 재호출로 메우려 하는데,
+    #   **같은 조건으로 다시 부르면 같은 답이 온다**(실측 재호출 성공률 0/2). 조건을 바꿀
+    #   손잡이가 계약에 없어서 재호출이 구조적으로 무의미했다.
+    #   ⚠️ 무엇을 요구하는지만 정한다 — **어떻게 보장할지는 어댑터 소유**(도구 회수·넛지·프롬프트
+    #   강화 중 무엇을 쓸지는 구현 자유). 호출자는 "텍스트가 필요하다"까지만 말한다.
+    #   ⚠️ 이 호출의 산출물은 **발화뿐**이라고 봐야 한다 — 도구를 회수하는 구현이면 keywords·
+    #   done·result 가 비어 돌아온다. 호출자는 직전 턴의 그 값들을 유지하고 발화만 취한다.
+    require_text: bool = False
 
 
 @dataclass(frozen=True)
