@@ -18,7 +18,7 @@ from heysenlyt_ai_port.ports.recipe_port import LlmPort
 
 class ConversationPort(ABC):
     """대화 함수의 약속 — 반환 = ConverseReply.to_dict():
-    {"reply": AI 발화, "keywords": 칩(≤4), "done": readiness 제출됨,
+    {"reply": AI 발화, "keywords": 폐기(항상 []), "done": readiness 제출됨,
      "result": done일 때 취향 축 페이로드|None, "history": 갱신된 기록}.
     history 통째가 다음 요청의 history. 재진입·llm 인자 주입 불변식은 RecipePort와 동일.
     """

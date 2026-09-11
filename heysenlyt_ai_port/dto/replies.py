@@ -41,7 +41,8 @@ class ConverseReply:
     """converse 출력 — v1.2.0 SSE(token·tool·done)를 한 턴 결과로 접은 형태.
 
     reply    : AI 발화 전체(v1.2.0 token 델타 누적분).
-    keywords : suggestKeywords 칩(객관식 보기, ≤4). 빈 리스트=칩 없음.
+    keywords : ⚠️ 폐기(2026-09-11) — 객관식 칩 제거. **항상 빈 리스트.** 위치인자 4번째라 자리만 유지한다
+               (지우면 위치인자 소비자가 깨진다). 호출자는 이 값을 읽지 않는다.
     done     : readiness 툴이 호출됨(취향 축 제출 완료). v1.2.0 finishReason="tool" 계열.
                ⛔ done=True 여도 대화는 계속될 수 있다(더 깊어지면 갱신 재제출) — 종료가 아니라
                "지금 만들 수 있음" 신호. 실제 확정(제조/조향)은 별도 레시피 호출.
@@ -54,7 +55,7 @@ class ConverseReply:
     reply: str
     done: bool = False
     result: dict[str, Any] | None = None
-    keywords: list[str] = field(default_factory=list)
+    keywords: list[str] = field(default_factory=list)  # 폐기 — 항상 [] (위치인자 호환용 자리)
     history: list[tuple[str, str]] = field(default_factory=list)
     # 대화도 4개 독립 능력 중 하나 — 자기 버전 도장을 싣는다(어댑터가 3값 합쳐 kernel_version 제공).
     stamp: dict[str, str] = field(default_factory=dict)
